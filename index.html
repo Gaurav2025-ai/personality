@@ -619,7 +619,7 @@
             h1 { font-size: 2rem; }
             h2 { font-size: 1.2rem; }
             .card-grid { grid-template-columns: 1fr; }
-            .overview-grid { grid-template-columns: 1fr; }
+            .overview-grid { grid-template-columns: repeat(2, 1fr); }
             .deliverable-grid { grid-template-columns: 1fr; }
             .nav { padding: 0.6rem 0.75rem; gap: 0.4rem; }
             .nav-brand { font-size: 0.95rem; }
@@ -639,18 +639,113 @@
             .schedule-progress { width: 80px; }
             .success-box { padding: 1.25rem; }
             .activity-highlight { font-size: 0.82rem; padding: 0.5rem 0.75rem; }
+
+            /* COLLAPSIBLE WEEK BLOCKS ON MOBILE */
+            .week-block { padding: 0; border: 1px solid var(--border); }
+            .week-block .week-label {
+                padding: 1rem 1.25rem;
+                margin-bottom: 0;
+                cursor: pointer;
+                position: relative;
+            }
+            .week-block .week-label::after {
+                content: '▼';
+                position: absolute;
+                right: 1.25rem;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 0.7rem;
+                color: var(--text-muted);
+                transition: transform 0.3s;
+            }
+            .week-block.collapsed .week-label::after {
+                transform: translateY(-50%) rotate(-90deg);
+            }
+            .week-block .card-grid {
+                padding: 0 1rem 1rem;
+                transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+                max-height: 5000px;
+                opacity: 1;
+                overflow: hidden;
+            }
+            .week-block.collapsed .card-grid {
+                max-height: 0;
+                opacity: 0;
+                padding: 0 1rem;
+            }
+
+            /* BOTTOM TAB NAV ON MOBILE */
+            .nav { display: none; }
+
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0; left: 0; right: 0;
+                background: var(--nav-bg);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid var(--border);
+                z-index: 1000;
+                padding: 0.4rem 0.25rem;
+                justify-content: space-around;
+                align-items: center;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+            }
+
+            .mobile-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: var(--text-muted);
+                font-size: 0.6rem;
+                font-weight: 600;
+                padding: 0.3rem 0.4rem;
+                border-radius: 8px;
+                transition: all 0.2s;
+                gap: 0.15rem;
+            }
+
+            .mobile-nav a .mob-icon { font-size: 1.2rem; }
+            .mobile-nav a.active { color: var(--ai); background: rgba(124, 58, 237, 0.08); }
+            .mobile-nav a:hover { color: var(--text); }
+
+            main { margin-top: 0; margin-bottom: 70px; padding-top: 1.5rem; }
+
+            /* Compact analytics on mobile */
+            .analytics-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+            .analytics-stat { padding: 1rem 0.5rem; }
+            .stat-number { font-size: 1.5rem; }
+            .stat-label { font-size: 0.65rem; }
+            .ring-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .ring-svg { width: 70px; height: 70px; }
+            .ring-percent { font-size: 1.1rem; }
+            .dimension-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+            .dimension-card { padding: 0.75rem; }
+            .dimension-card .dim-icon { font-size: 1.2rem; margin-bottom: 0.25rem; }
+            .dimension-card .dim-title { font-size: 0.8rem; }
+            .dimension-card .dim-desc { font-size: 0.7rem; }
         }
 
         @media (max-width: 480px) {
-            main { padding: 0.75rem 0.5rem; }
+            main { padding: 0.75rem 0.5rem; padding-top: 1rem; }
             h1 { font-size: 1.7rem; }
             .card-grid { gap: 1rem; }
             .card { padding: 1rem; border-radius: 12px; }
-            .week-block { padding: 1rem; border-radius: 12px; }
+            .week-block { border-radius: 12px; }
             .task-header { padding: 1.25rem 1rem; }
             .task-title { font-size: 1.1rem; }
             .schedule-bar { flex-wrap: wrap; gap: 0.5rem; }
             .schedule-progress { width: 100%; }
+            .overview-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+            .dimension-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Mobile nav - hidden on desktop */
+        .mobile-nav { display: none; }
+
+        @media (min-width: 769px) {
+            .mobile-nav { display: none !important; }
         }
 
         /* Scroll animations */
@@ -2341,6 +2436,38 @@
 
 </main>
 
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-nav" id="mobileNav">
+    <a href="#overview" class="active">
+        <span class="mob-icon">🏠</span>
+        Home
+    </a>
+    <a href="#analytics">
+        <span class="mob-icon">📊</span>
+        Progress
+    </a>
+    <a href="#task1">
+        <span class="mob-icon">🇯🇵</span>
+        Japan
+    </a>
+    <a href="#task2">
+        <span class="mob-icon">🤖</span>
+        AI
+    </a>
+    <a href="#task3">
+        <span class="mob-icon">📈</span>
+        Finance
+    </a>
+    <a href="#task4">
+        <span class="mob-icon">🎵</span>
+        Music
+    </a>
+    <a href="#toolbox">
+        <span class="mob-icon">🧰</span>
+        Tools
+    </a>
+</nav>
+
 <script>
 // Theme toggle
 const themeToggle = document.getElementById('themeToggle');
@@ -2521,18 +2648,20 @@ updateAnalytics();
 // NAVIGATION & ANIMATIONS
 // ═══════════════════════════════════════════
 
-// Smooth scroll
-document.querySelectorAll('.nav a').forEach(link => {
+// Smooth scroll for both navs
+document.querySelectorAll('.nav a, .mobile-nav a').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
         if (target) target.scrollIntoView({ behavior: 'smooth' });
-        document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
+
+        // Update active state for both navs
+        document.querySelectorAll('.nav a, .mobile-nav a').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll(`a[href="${link.getAttribute('href')}"]`).forEach(l => l.classList.add('active'));
     });
 });
 
-// Active nav on scroll
+// Active nav on scroll (both navs)
 window.addEventListener('scroll', () => {
     const sections = document.querySelectorAll('section');
     let current = '';
@@ -2541,11 +2670,54 @@ window.addEventListener('scroll', () => {
             current = section.getAttribute('id');
         }
     });
-    document.querySelectorAll('.nav a').forEach(link => {
+    document.querySelectorAll('.nav a, .mobile-nav a').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) link.classList.add('active');
     });
 });
+
+// ═══════════════════════════════════════════
+// COLLAPSIBLE WEEKS ON MOBILE
+// ═══════════════════════════════════════════
+function initCollapsibleWeeks() {
+    const isMobile = window.innerWidth <= 768;
+    const weekBlocks = document.querySelectorAll('.week-block');
+
+    weekBlocks.forEach((block, index) => {
+        const label = block.querySelector('.week-label');
+        if (!label) return;
+
+        // On mobile, collapse all except the first one in each task
+        if (isMobile) {
+            // Find position within its parent section
+            const parentSection = block.closest('section');
+            const blocksInSection = parentSection ? parentSection.querySelectorAll('.week-block') : [];
+            const indexInSection = Array.from(blocksInSection).indexOf(block);
+
+            if (indexInSection > 0) {
+                block.classList.add('collapsed');
+            }
+
+            label.addEventListener('click', () => {
+                block.classList.toggle('collapsed');
+            });
+        } else {
+            block.classList.remove('collapsed');
+        }
+    });
+}
+
+// Re-init on resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        document.querySelectorAll('.week-block').forEach(b => b.classList.remove('collapsed'));
+        initCollapsibleWeeks();
+    }, 250);
+});
+
+initCollapsibleWeeks();
 
 // Reveal on scroll
 const observer = new IntersectionObserver((entries) => {
