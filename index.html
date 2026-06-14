@@ -21,8 +21,8 @@
             --music-grad: linear-gradient(135deg, #f59e0b, #fbbf24);
             --bg: #fafbff;
             --card-bg: #ffffff;
-            --text: #1a1a2e;
-            --text-muted: #64748b;
+            --text: #0f0f1a;
+            --text-muted: #3d4555;
             --border: #e8ecf4;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.1);
@@ -414,10 +414,13 @@
         .task-list li {
             position: relative;
             padding: 0.5rem 0 0.5rem 1.75rem;
-            color: var(--text-muted);
+            color: #2d3748;
             font-size: 0.92rem;
-            font-weight: 400;
+            font-weight: 450;
             border-bottom: 1px solid #f8f9fa;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
         }
 
         .task-list li:last-child { border-bottom: none; }
@@ -667,7 +670,8 @@
         [data-theme="dark"] .bg-shape { opacity: 0.04; }
         [data-theme="dark"] .card { background: var(--card-bg); border-color: var(--border); }
         [data-theme="dark"] .week-block { background: var(--card-bg); border-color: var(--border); }
-        [data-theme="dark"] .task-list li { border-bottom-color: rgba(255,255,255,0.04); }
+        [data-theme="dark"] .task-list li { border-bottom-color: rgba(255,255,255,0.04); color: #c8c8e0; }
+        [data-theme="dark"] .task-list li.completed { color: #8a8ab0; }
         [data-theme="dark"] .data-table tr:hover td { background: var(--table-hover); }
         [data-theme="dark"] .success-box { background: var(--success-bg); border-color: rgba(16, 185, 129, 0.15); }
         [data-theme="dark"] .deliverable-item { background: rgba(255,255,255,0.03); }
@@ -684,15 +688,11 @@
         .counter { font-family: 'Space Grotesk'; font-size: 2.5rem; font-weight: 700; }
 
         /* Checkable task items */
-        .task-list li {
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s;
-        }
-
         .task-list li.completed {
             text-decoration: line-through;
-            opacity: 0.5;
+            text-decoration-color: var(--finance);
+            text-decoration-thickness: 2px;
+            opacity: 0.7;
             color: var(--text-muted);
         }
 
@@ -701,6 +701,7 @@
             color: var(--finance) !important;
             opacity: 1 !important;
             font-weight: 700;
+            font-size: 1rem;
         }
 
         .task-list li:hover { opacity: 0.8; }
